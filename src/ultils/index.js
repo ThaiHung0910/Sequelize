@@ -39,9 +39,9 @@ const getRates = async (conditions = {}) => {
   });
 };
 
-export { getLikes, getRates };
 
-export const changeFormatDate = (value) => {
+
+const changeFormatDate = (value) => {
   const date = new Date(value);
 
   const pad = (num) => String(num).padStart(2, "0");
@@ -54,3 +54,5 @@ export const changeFormatDate = (value) => {
 
   return formattedDate;
 };
+
+export { getLikes, getRates, changeFormatDate };
