@@ -155,21 +155,13 @@ const processRates = (rates, type) => {
           };
         }
 
-        const userRate = object[resId].listUserRate.find(
-          (user) => user.userId === userId
-        );
-
-        if (userRate) {
-          userRate.amount += amount;
-        } else {
-          object[resId].listUserRate.push({
-            userId,
-            userName,
-            email,
-            amount,
-            dateRate: date,
-          });
-        }
+        object[resId].listUserRate.push({
+          userId,
+          userName,
+          email,
+          amount,
+          dateRate: date,
+        });
         break;
       default:
         if (!object[userId]) {
@@ -179,19 +171,13 @@ const processRates = (rates, type) => {
             listResRate: [],
           };
         }
-        const resRate = object[userId].listResRate.find(
-          (res) => res.resId === resId
-        );
-        if (resRate) {
-          resRate.amount += amount;
-        } else {
-          object[userId].listResRate.push({
-            resId,
-            restaurantName,
-            amount,
-            dateRate: date,
-          });
-        }
+
+        object[userId].listResRate.push({
+          resId,
+          restaurantName,
+          amount,
+          dateRate: date,
+        });
     }
   });
 
@@ -215,17 +201,13 @@ const getRate = (ratings, type) => {
     switch (type) {
       case "user":
         const resId = rating.res_id;
-        const resRate = list.find((res) => res.resId === resId);
-        if (!resRate) {
-          list.push({
-            resId,
-            resName: rating.re.res_name,
-            amount,
-            dateRate: date,
-          });
-        } else {
-          resRate.amount += amount;
-        }
+        
+        list.push({
+          resId,
+          resName: rating.re.res_name,
+          amount,
+          dateRate: date,
+        });
 
         result = {
           name,
@@ -235,18 +217,14 @@ const getRate = (ratings, type) => {
         break;
       default:
         const userId = rating.user_id;
-        const userRate = list.find((user) => user.userId === userId);
-        if (!userRate) {
-          list.push({
-            userId,
-            name: rating.user.full_name,
-            email: rating.user.email,
-            amount,
-            dateRate: date,
-          });
-        } else {
-          userRate.amount += amount;
-        }
+        
+        list.push({
+          userId,
+          name: rating.user.full_name,
+          email: rating.user.email,
+          amount,
+          dateRate: date,
+        });
 
         result = {
           name: restaurantName,
@@ -272,6 +250,11 @@ const changeFormatDate = (value) => {
   return formattedDate;
 };
 
+const checkNumber = (value) => {
+  value = JSON.parse(value);
+  return Number.isInteger(value);
+};
+
 export {
   getLikes,
   getRates,
@@ -280,4 +263,5 @@ export {
   processRates,
   getLike,
   getRate,
+  checkNumber,
 };

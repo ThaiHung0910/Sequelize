@@ -1,11 +1,12 @@
 import express from 'express'
-import { addRateRestaurant, getRestaurantLike, getUserLike, toggleLike, getRateRestaurant, getRateUser, getListUserLike, getListRestaurantLike, getListRateRestaurant, getListRateUser } from '../controllers/restaurantController.js';
+import { addRateRestaurant, getRestaurantLike, getUserLike, like, unlike ,getRateRestaurant, getRateUser, getListUserLike, getListRestaurantLike, getListRateRestaurant, getListRateUser } from '../controllers/restaurantController.js';
 
 
 const restaurantRouter = express.Router();
 
 
-restaurantRouter.post('/like', toggleLike)
+restaurantRouter.post('/like', like)
+restaurantRouter.delete('/unlike', unlike)
 
 restaurantRouter.get('/likes-user', getListUserLike)
 restaurantRouter.get('/likes-user/:user_id', getUserLike)
