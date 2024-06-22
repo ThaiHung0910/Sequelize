@@ -13,6 +13,10 @@ import {
 
 let model = initModels(sequelize);
 
+const messageError = (res, err) => {
+  return responseSend(res, "", err.message, 500);
+}
+
 const like = async (req, res) => {
   const { user_id, res_id } = req.body;
   try {
@@ -25,8 +29,8 @@ const like = async (req, res) => {
     } else {
       responseSend(res, "", "Already liked this restaurant", 403);
     }
-  } catch (error) {
-    responseSend(res, "", error.message, 500);
+  } catch (err) {
+    messageError(res, err)
   }
 };
 
@@ -42,8 +46,8 @@ const unlike = async (req, res) => {
     } else {
       responseSend(res, "", "Not found!", 404);
     }
-  } catch (error) {
-    responseSend(res, "", error.message, 500);
+  } catch (err) {
+    messageError(res, err)
   }
 };
 
@@ -55,8 +59,8 @@ const getListUserLike = async (req, res) => {
 
     let result = processLikes(likes, "user");
     responseSend(res, result, "Successfully!", 200);
-  } catch (error) {
-    responseSend(res, "", error.message, 500);
+  } catch (err) {
+    messageError(res, err)
   }
 };
 
@@ -70,7 +74,7 @@ const getUserLike = async (req, res) => {
     let result = getLike(likes, "user");
     responseSend(res, result, "Successfully!", 200);
   } catch (err) {
-    responseSend(res, "", err.message, 500);
+    messageError(res, err)
   }
 };
 
@@ -82,7 +86,7 @@ const getListRestaurantLike = async (req, res) => {
 
     responseSend(res, result, "Successfully", 200);
   } catch (err) {
-    responseSend(res, "", err.message, 500);
+    messageError(res, err)
   }
 };
 
@@ -95,7 +99,7 @@ const getRestaurantLike = async (req, res) => {
     let result = getLike(likes, "restaurant");
     responseSend(res, result, "Successfully!", 200);
   } catch (err) {
-    responseSend(res, "", err.message, 500);
+    messageError(res, err)
   }
 };
 
@@ -127,8 +131,8 @@ const addRateRestaurant = async (req, res) => {
     } else {
       responseSend(res, "", "Invalid value!", 403);
     }
-  } catch (error) {
-    responseSend(res, "", "Error occurred while processing the rating!", 500);
+  } catch (err) {
+    messageError(res, err)
   }
 };
 
@@ -141,7 +145,7 @@ const getListRateRestaurant = async (req, res) => {
     let result = processRates(rates, "restaurant");
     responseSend(res, result, "Successfully!", 200);
   } catch (err) {
-    responseSend(res, "", err.message, 500);
+    messageError(res, err)
   }
 };
 
@@ -155,7 +159,7 @@ const getRateRestaurant = async (req, res) => {
 
     responseSend(res, result, "Successfully!", 200);
   } catch (err) {
-    responseSend(res, "", err.message, 500);
+    messageError(res, err)
   }
 };
 
@@ -168,7 +172,7 @@ const getListRateUser = async (req, res) => {
     let result = processRates(rates, "user");
     responseSend(res, result, "Successfully!", 200);
   } catch (err) {
-    responseSend(res, "", err.message, 500);
+    messageError(res, err)
   }
 };
 
@@ -183,7 +187,7 @@ const getRateUser = async (req, res) => {
 
     responseSend(res, result, "Successfully!", 200);
   } catch (err) {
-    responseSend(res, "", err.message, 500);
+    messageError(res, err)
   }
 };
 

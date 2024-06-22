@@ -201,7 +201,7 @@ const getRate = (ratings, type) => {
     switch (type) {
       case "user":
         const resId = rating.res_id;
-        
+
         list.push({
           resId,
           resName: rating.re.res_name,
@@ -217,7 +217,7 @@ const getRate = (ratings, type) => {
         break;
       default:
         const userId = rating.user_id;
-        
+
         list.push({
           userId,
           name: rating.user.full_name,
@@ -239,20 +239,20 @@ const getRate = (ratings, type) => {
 const changeFormatDate = (value) => {
   const date = new Date(value);
 
-  const pad = (num) => String(num).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
 
-  const formattedDate = `${date.getUTCFullYear()}-${pad(
-    date.getUTCMonth() + 1
-  )}-${pad(date.getUTCDate())} ${pad(date.getUTCHours())}:${pad(
-    date.getUTCMinutes()
-  )}:${pad(date.getUTCSeconds())}`;
-
-  return formattedDate;
+  return `${day}/${month}/${year}`;
 };
 
 const checkNumber = (value) => {
-  value = JSON.parse(value);
-  return Number.isInteger(value);
+  try {
+    value = JSON.parse(value);
+    return Number.isInteger(value);
+  } catch {
+    return false;
+  }
 };
 
 export {
